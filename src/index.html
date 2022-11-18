@@ -19,20 +19,11 @@
     <h1> WASSUP </h1>
   </main>
 
-<input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: block;">
-<img id="output" width="200" />
 
-<script>
-var loadFile = function(event) {
-	var image = document.getElementById('output');
-	image.src = URL.createObjectURL(event.target.files[0]);
-};
 </script>
 <py-script>
-from datetime import datetime
-now = datetime.now()
-display(now.strftime("%m/%d/%Y, %H:%M:%S"))
-    </py-script>
+print("Hello World")
+ </py-script>
 </body>
 
 </html>
