@@ -11,7 +11,13 @@
     	<link rel="icon" type="image/png" href="favicon.png" />
     	<link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
 	<script defer src="https://pyscript.net/latest/pyscript.js"></script>
-	
+	<py-env>
+        - matplotlib
+	- numpy
+	- easygui
+	- PIL
+	- os
+      </py-env>
 </head>
 
 <body>
@@ -31,10 +37,6 @@ import numpy as np
 import easygui
 from PIL import Image
 import os
-import csv
-import pandas as pd
-from openpyxl import Workbook
-from pathlib import Path
 
 path = easygui.fileopenbox()
 
