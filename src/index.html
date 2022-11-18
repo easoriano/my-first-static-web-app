@@ -48,6 +48,7 @@ im = Image.open(path)
 im=im.convert("L")
 img_28x28 = np.array(im.resize((28, 28), Image.ANTIALIAS))
 img_28x28_flat  = img_28x28.reshape(-1,1).T
+print(img_28x28_flat)
     </py-script>	    
 </body>
 
