@@ -18,18 +18,34 @@
   <main>
     <h1> WASSUP </h1>
   </main>
-    <form> 
-        <label for="myfile">Select a file:</label> 
-        <input type="file" id="myfile" 
-            name="myfile" multiple="multiple" /> 
-        <br /><br /> 
-        <input type="submit" /> 
+    
 
 
  <b><p>Today is <u><label id='today'></label></u></p></b>
     <py-script>
 import datetime as dt
 pyscript.write('today', dt.date.today().strftime('%A %B %d, %Y'))
+	    import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
+import numpy as np
+import easygui
+from PIL import Image
+import os
+import csv
+import pandas as pd
+from openpyxl import Workbook
+from pathlib import Path
+
+path = easygui.fileopenbox()
+
+imagefilename=os.path.basename(path)
+tuplet = os.path.splitext(imagefilename)
+imagename=tuplet[0]
+
+im = Image.open(path)
+im=im.convert("L")
+img_28x28 = np.array(im.resize((28, 28), Image.ANTIALIAS))
+img_28x28_flat  = img_28x28.reshape(-1,1).T
     </py-script>	    
 </body>
 
