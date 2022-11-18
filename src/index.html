@@ -1,47 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+      <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+      <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+      <py-env>
+            - numpy
+            - requests
+      </py-env>
+    </head>
 
-<head>
-  <title>Wassup Fools</title>
-	
-    	<link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-	<script defer src="https://pyscript.net/alpha/pyscript.js"></script>	
-	<py-env>
-		- numpy
-		- easygui
-		- PIL
-		- os
-      	</py-env>
-</head>
-
-<body>
-  <main>
-    <h1> WASSUP </h1>
-  </main>
-    
-
-
- <b><p>Today is <u><label id='today'></label></u></p></b>
+  <body>
     <py-script>
-import datetime as dt
-pyscript.write('today', dt.date.today().strftime('%A %B %d, %Y'))
-import numpy as np
-import easygui
-from PIL import Image
-import os
-
-path = easygui.fileopenbox()
-
-imagefilename=os.path.basename(path)
-tuplet = os.path.splitext(imagefilename)
-imagename=tuplet[0]
-
-im = Image.open(path)
-im=im.convert("L")
-img_28x28 = np.array(im.resize((28, 28), Image.ANTIALIAS))
-img_28x28_flat  = img_28x28.reshape(-1,1).T
-print(img_28x28_flat)
-    </py-script>	    
-</body>
-
+	import numpy as np
+	import requests
+    </py-script>
+  </body>
 </html>
+
