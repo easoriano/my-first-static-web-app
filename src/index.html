@@ -23,9 +23,8 @@
 </script>
 <py-script>
 	from datetime import datetime
-	from IPython.display import display
 	now = datetime.now()
-	display(now.strftime("%m/%d/%Y, %H:%M:%S"))
+	pyscript.write(now.strftime("%m/%d/%Y, %H:%M:%S"))
 	print("Hello World")
  </py-script>
 </body>
