@@ -20,13 +20,12 @@
   </main>
 
 
-</script>
-<py-script>
-	from datetime import datetime
-	now = datetime.now()
-	pyscript.write(now.strftime("%m/%d/%Y, %H:%M:%S"))
-	print("Hello World")
- </py-script>
+
+ <b><p>Today is <u><label id='today'></label></u></p></b>
+    <py-script>
+import datetime as dt
+pyscript.write('today', dt.date.today().strftime('%A %B %d, %Y'))
+    </py-script>	    
 </body>
 
 </html>
