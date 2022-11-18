@@ -7,6 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <title>Wassup Fools</title>
+	
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+	
+	
 </head>
 
 <body>
@@ -25,5 +30,9 @@ var loadFile = function(event) {
 </script>
 
 </body>
-
+<py-script>
+from datetime import datetime
+now = datetime.now()
+display(now.strftime("%m/%d/%Y, %H:%M:%S"))
+    </py-script>
 </html>
