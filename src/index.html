@@ -3,8 +3,6 @@
 
 <head>
 
-	<script defer src="https://pyscript.net/latest/pyscript.js"></script>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
@@ -25,6 +23,7 @@
 </script>
 <py-script>
 	from datetime import datetime
+	from IPython.display import display
 	now = datetime.now()
 	display(now.strftime("%m/%d/%Y, %H:%M:%S"))
 	print("Hello World")
