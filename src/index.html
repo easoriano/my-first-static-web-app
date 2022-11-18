@@ -12,7 +12,6 @@
     	<link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
 	<script defer src="https://pyscript.net/latest/pyscript.js"></script>
 	<py-env>
-        - matplotlib
 	- numpy
 	- easygui
 	- PIL
@@ -31,8 +30,6 @@
     <py-script>
 import datetime as dt
 pyscript.write('today', dt.date.today().strftime('%A %B %d, %Y'))
-import matplotlib.image as mpimg
-import matplotlib.pyplot as plt
 import numpy as np
 import easygui
 from PIL import Image
