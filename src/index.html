@@ -7,6 +7,21 @@
     Pyodide test page <br>
     Open your browser console to see Pyodide output
     <script type="text/javascript">
+      
+          <form
+        enctype="multipart/form-data"> 
+
+          
+
+        <label for="myfile">Select a file:</label> 
+
+        <input type="file" id="myfile" name="myfile" /> 
+
+        <br /><br /> 
+
+        <input type="submit" /> 
+
+      
       async function main(){
         let pyodide = await loadPyodide();
         await pyodide.loadPackage("numpy");
