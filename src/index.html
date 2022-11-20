@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+      <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js">
+      </script>
   </head>
   <body>
     Pyodide test page <br>
     Open your browser console to see Pyodide output
-    <script type="text/javascript">
+
+          
+    <form
+    enctype="multipart/form-data"> 
+
       
-          <form
-        enctype="multipart/form-data"> 
 
-          
+    <label for="myfile">Select a file:</label> 
 
-        <label for="myfile">Select a file:</label> 
+    <input type="file" id="myfile" accept="image/*" name="myfile" onchange="evaluatePython(event)" /> 
 
-        <input type="file" id="myfile" name="myfile" /> 
+    <br /><br /> 
 
-        <br /><br /> 
+    <input type="submit" /> 
+      
+      <form/>
 
-        <input type="submit" /> 
-          
-          <form/>
+      <img id="output"/>
+
+    <input type="button" id='button' value="Hey"/>
+
+
+
+    <script type="text/javascript">
+
+
+
 
       
       async function main(){
@@ -30,11 +42,59 @@
         console.log(pyodide.runPython(`
             import sys
             import numpy as np
+            import js
             sys.version
         `));
-        pyodide.runPython("print(np.array([2]))");
+        pyodide.runPython(`
+            print("1")
+        
+        `);
+        return pyodide
       }
-      main();
+
+    
+    
+
+      pyodide2= main();
+
+      async function evaluatePython(event)
+        {
+             function context2d(width, height, dpi) {
+                if (dpi == null) dpi = devicePixelRatio;
+                var canvas = document.createElement("canvas");
+                canvas.width = width * dpi;
+                canvas.height = height * dpi;
+                canvas.style.width = width + "px";
+                var context = canvas.getContext("2d");
+                context.scale(dpi, dpi);
+                return context;
+                }
+
+            let pyodide = await pyodide2;
+            var image=document.getElementById("output")
+            image.src=URL.createObjectURL(event.target.files[0]);
+            blob=(event.target.files[0]);
+            const bitmap = await createImageBitmap(blob);
+            const [width, height] = [bitmap.width, bitmap.height];
+
+            // an intermediate "buffer" 2D context is necessary
+            const ctx = context2d(width, height, 1);
+            ctx.drawImage(bitmap, 0, 0);
+
+            var dater = ctx.getImageData(0, 0, width, height).data;
+            dater ="print('"+dater+"')"
+            document.getElementById("button").value=image.src
+            pyodide.runPython(dater)
+            pyodide.runPython(`
+            print(np.array([2]))
+            the=js.document.getElementById("myfile").src        # rember to free memory
+            output = js.document.getElementById('output');
+
+            print(the)
+
+        
+        `);
+        }
     </script>
   </body>
 </html>
