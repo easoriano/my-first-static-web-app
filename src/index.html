@@ -37,6 +37,7 @@
                 await micropip.install('ssl')
                 import ssl
                 import pandas as pd
+                import time
                 sys.version
             `));
             return pyodide
@@ -143,8 +144,15 @@
             # Remove this header to have the request observe the endpoint traffic rules
             headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ key)}
 
-            req = urllib.request.Request(endpoint, body, headers)
-            print(req)
+            print(endpoint)
+
+            print(body)
+
+            print(headers)
+
+            req = urllib.request.urlopen(urllib.request.Request('http://20.252.33.64:80/api/v1/service/predict-diabetes/score', body, headers,unverifiable=True,origin_req_host='https://ambitious-water-0d40d801e.2.azurestaticapps.net'),timeout=10)
+            print("hi")
+            time.sleep(60)
             try:
                 response = urllib.request.urlopen(req)
 
