@@ -1,65 +1,53 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-      <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js">
-      </script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>                        <!-- Pyodide Source -->         
   </head>
+
   <body>
-    Pyodide test page <br>
-    Open your browser console to see Pyodide output
-
           
-    <form
-    enctype="multipart/form-data"> 
-
-      
-
-    <label for="myfile">Select a file:</label> 
-
-    <input type="file" id="myfile" accept="image/*" name="myfile" onchange="evaluatePython(event)" /> 
-
-    <br /><br /> 
-
-    <input type="submit" /> 
-      
-      <form/>
-
-      <img id="output"/>
-
-    <input type="button" id='button' value="Hey"/>
+    <form enctype="multipart/form-data">                                                                    <!--File input form which calls evalutePython on file input -->
+        <label for="myfile">Select a file:</label> 
+        <input type="file" id="myfile" accept="image/*" name="myfile" onchange="evaluatePython(event)" />  
+        <br /><br />  
+    <form/>
 
 
-
-    <script type="text/javascript">
-
+    <img id="output"/>                                                                                      <!-- Image element to display image -->
 
 
+    <script type="text/javascript">                                              // Javascript/Pyodide code to take image data and send to RESTful API
+        async function main()                                                    // Main function loads pyodide and imports necessary libraries        
+        { 
+            let pyodide = await loadPyodide();   
+            await pyodide.loadPackage("micropip");
+                                     
+            await pyodide.loadPackage("numpy");
+            console.log(pyodide.runPythonAsync
+            (`
+                import sys
+                import numpy as np
+                import js
+                import micropip
+                await micropip.install('pandas')
+                import urllib.request
+                import json
+                import os
+                await micropip.install('ssl')
+                import ssl
+                import pandas as pd
+                sys.version
+            `));
+            return pyodide
+        }
 
-      
-      async function main(){
-        let pyodide = await loadPyodide();
-        await pyodide.loadPackage("numpy");
-        console.log(pyodide.runPython(`
-            import sys
-            import numpy as np
-            import js
-            sys.version
-        `));
-        pyodide.runPython(`
-            print("1")
-        
-        `);
-        return pyodide
-      }
+        pyodide2= main();                                                       // Pyodide object is returned from main to use in next function 'evaluatePython'
 
-    
-    
-
-      pyodide2= main();
-
-      async function evaluatePython(event)
+        async function evaluatePython(event)                                    // evaluatePython is called when input file is changed. event passes on file information
         {
-             function context2d(width, height, dpi) {
+            function context2d(width, height, dpi)                              // Defines context2d function
+            {
                 if (dpi == null) dpi = devicePixelRatio;
                 var canvas = document.createElement("canvas");
                 canvas.width = width * dpi;
@@ -68,29 +56,108 @@
                 var context = canvas.getContext("2d");
                 context.scale(dpi, dpi);
                 return context;
-                }
+            }
 
-            let pyodide = await pyodide2;
-            var image=document.getElementById("output")
+            let pyodide = await pyodide2;                                       // Loads pyodide object initialized in main function
+
+            var image=document.getElementById("output")                         // Sets image source to input file URL (displays image)
             image.src=URL.createObjectURL(event.target.files[0]);
-            blob=(event.target.files[0]);
+
+            blob=(event.target.files[0]);                                       // Gets image blob and converts to data array variabler dater (makes use of context2d)
             const bitmap = await createImageBitmap(blob);
             const [width, height] = [bitmap.width, bitmap.height];
-
-            // an intermediate "buffer" 2D context is necessary
             const ctx = context2d(width, height, 1);
             ctx.drawImage(bitmap, 0, 0);
-
             var dater = ctx.getImageData(0, 0, width, height).data;
-            dater ="print('"+dater+"')"
-            document.getElementById("button").value=image.src
-            pyodide.runPython(dater)
-            pyodide.runPython(`
-            print(np.array([2]))
-            the=js.document.getElementById("myfile").src        # rember to free memory
-            output = js.document.getElementById('output');
 
-            print(the)
+            dater ="im=np.array(["+dater+"])"                                   // Turns dater string into python executable string
+            pyodide.runPython(dater)                                            // Executes dater string in python
+            pyodide.runPython("")                 
+            pyodide.runPython(`
+            img28x28=np.resize(im,(28,28))                      # Reshapes data into 28 x 28 matrix
+            img_flat=img28x28.reshape(-1,1).T                   # Flattens to 1D Array
+            df = pd.DataFrame(img_flat).T                       # Converts to panda dataframe
+            print(img28x28)
+            print(img_flat)
+            print(df)
+            
+            def allowSelfSignedHttps(allowed):
+                # bypass the server certificate verification on client side
+                if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
+                    ssl._create_default_https_context = ssl._create_unverified_context
+
+            allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
+
+            # Request data goes here
+            # The example below assumes JSON formatting which may be updated
+            # depending on the format your endpoint expects.
+            # More information can be found here:
+            # https://docs.microsoft.com/azure/machine-learning/how-to-deploy-advanced-entry-script
+            data =  {
+                "Inputs": {
+                    "input1": [
+                        {
+                        "PatientID": 1882185,
+                        "Pregnancies": 9,
+                        "PlasmaGlucose": 104,
+                        "DiastolicBloodPressure": 51,
+                        "TricepsThickness": 7,
+                        "SerumInsulin": 24,
+                        "BMI": 27.36983156,
+                        "DiabetesPedigree": 1.3504720469999998,
+                        "Age": 43
+                        },
+                        {
+                        "PatientID": 1662484,
+                        "Pregnancies": 6,
+                        "PlasmaGlucose": 73,
+                        "DiastolicBloodPressure": 61,
+                        "TricepsThickness": 35,
+                        "SerumInsulin": 24,
+                        "BMI": 18.74367404,
+                        "DiabetesPedigree": 1.074147566,
+                        "Age": 75
+                        },
+                        {
+                            "PatientID": 1228510,
+                        "Pregnancies": 4,
+                        "PlasmaGlucose": 115,
+                        "DiastolicBloodPressure": 50,
+                        "TricepsThickness": 29,
+                        "SerumInsulin": 243,
+                        "BMI": 34.69215364,
+                        "DiabetesPedigree": 0.7411599259999999,
+                        "Age": 59
+                        }
+                        ]
+                        },
+                    "GlobalParameters": {}
+                    }
+
+            body = str.encode(json.dumps(data))
+
+            endpoint = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score'
+            key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ' # Replace this with the API key for the web service
+
+            # The azureml-model-deployment header will force the request to go to a specific deployment.
+            # Remove this header to have the request observe the endpoint traffic rules
+            headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ key)}
+
+            req = urllib.request.Request(endpoint, body, headers)
+            print(req)
+            try:
+                response = urllib.request.urlopen(req)
+
+                result = response.read()
+                json_result = json.loads(result)
+                output = json_result["Results"]["WebServiceOutput0"][0]
+               
+            except urllib.error.HTTPError as error:
+                print("The request failed with status code: " + str(error.code))
+
+                # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
+                print(error.info())
+                print(error.read().decode("utf8", 'ignore'))
 
         
         `);
