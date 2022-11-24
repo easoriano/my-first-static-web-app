@@ -33,6 +33,8 @@
                 await micropip.install('pandas')
                 import urllib.request
                 import json
+                from js import fetch, Object
+                from pyodide.http import to_js
                 import os
                 await micropip.install('ssl')
                 import ssl
@@ -59,7 +61,56 @@
                 return context;
             }
 
+
             let pyodide = await pyodide2;                                       // Loads pyodide object initialized in main function
+
+            const rawResponse = await fetch('http://20.252.33.64:80/api/v1/service/predict-diabetes/score', {method: "POST",
+headers:  {'Access-Control-Allow-Origin': "*","Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS","Access-Control-Allow-Headers":"Content-Type, Authorization, X-Requested-With", 'Content-Type':'application/json', 'Authorization':('Bearer '+ 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ')}
+,
+    body: JSON.stringify( {
+                "Inputs": {
+                    "input1": [
+                        {
+                        "PatientID": 1882185,
+                        "Pregnancies": 9,
+                        "PlasmaGlucose": 104,
+                        "DiastolicBloodPressure": 51,
+                        "TricepsThickness": 7,
+                        "SerumInsulin": 24,
+                        "BMI": 27.36983156,
+                        "DiabetesPedigree": 1.3504720469999998,
+                        "Age": 43
+                        },
+                        {
+                        "PatientID": 1662484,
+                        "Pregnancies": 6,
+                        "PlasmaGlucose": 73,
+                        "DiastolicBloodPressure": 61,
+                        "TricepsThickness": 35,
+                        "SerumInsulin": 24,
+                        "BMI": 18.74367404,
+                        "DiabetesPedigree": 1.074147566,
+                        "Age": 75
+                        },
+                        {
+                            "PatientID": 1228510,
+                        "Pregnancies": 4,
+                        "PlasmaGlucose": 115,
+                        "DiastolicBloodPressure": 50,
+                        "TricepsThickness": 29,
+                        "SerumInsulin": 243,
+                        "BMI": 34.69215364,
+                        "DiabetesPedigree": 0.7411599259999999,
+                        "Age": 59
+                        }
+                        ]
+                        },
+                    "GlobalParameters": {}
+                    })
+  });
+  const content = await rawResponse.json();
+
+  console.log(content);
 
             var image=document.getElementById("output")                         // Sets image source to input file URL (displays image)
             image.src=URL.createObjectURL(event.target.files[0]);
@@ -74,6 +125,9 @@
             dater ="im=np.array(["+dater+"])"                                   // Turns dater string into python executable string
             pyodide.runPython(dater)                                            // Executes dater string in python
             pyodide.runPython("")                 
+
+
+ 
             pyodide.runPython(`
             img28x28=np.resize(im,(28,28))                      # Reshapes data into 28 x 28 matrix
             img_flat=img28x28.reshape(-1,1).T                   # Flattens to 1D Array
@@ -135,22 +189,34 @@
                     "GlobalParameters": {}
                     }
 
-            body = str.encode(json.dumps(data))
+            body_ = str.encode(json.dumps(data))
 
             endpoint = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score'
             key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ' # Replace this with the API key for the web service
 
             # The azureml-model-deployment header will force the request to go to a specific deployment.
             # Remove this header to have the request observe the endpoint traffic rules
-            headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ key)}
+            headers_ = {'Content-Type':'application/json', 'Authorization':('Bearer '+ key)}
 
             print(endpoint)
 
-            print(body)
+            print(body_)
 
-            print(headers)
+            print(headers_)
+        
+            response =fetch('http://20.252.33.64:80/api/v1/service/predict-diabetes/score',body=body_,headers=Object.fromEntries(to_js(headers_)))
+            print("hi")     
+            print(response)
+            result = response.read()
+            print("hi")     
 
-            req = urllib.request.urlopen(urllib.request.Request('http://20.252.33.64:80/api/v1/service/predict-diabetes/score', body, headers,unverifiable=True,origin_req_host='https://ambitious-water-0d40d801e.2.azurestaticapps.net'),timeout=10)
+            json_result = json.loads(result)
+            print("hi")     
+
+            output = json_result["Results"]["WebServiceOutput0"][0]
+            print("hi")     
+
+            req = js.window.fetch('http://20.252.33.64:80/api/v1/service/predict-diabetes/score',{headers:headers_,body:body_})
             print("hi")
             time.sleep(60)
             try:
