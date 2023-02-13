@@ -20,6 +20,7 @@
     <script type="text/javascript">                                              // Javascript/Pyodide code to take image data and send to RESTful API
         async function main()                                                    // Main function loads pyodide and imports necessary libraries        
         { 
+            print("hi");
             let pyodide = await loadPyodide();   
             await pyodide.loadPackage("micropip");
                                      
