@@ -20,7 +20,7 @@
     <script type="text/javascript">                                              // Javascript/Pyodide code to take image data and send to RESTful API
         async function main()                                                    // Main function loads pyodide and imports necessary libraries        
         { 
-            print("hi");
+            
             let pyodide = await loadPyodide();   
             await pyodide.loadPackage("micropip");
                                      
@@ -50,17 +50,7 @@
 
         async function evaluatePython(event)                                    // evaluatePython is called when input file is changed. event passes on file information
         {
-            function context2d(width, height, dpi)                              // Defines context2d function
-            {
-                if (dpi == null) dpi = devicePixelRatio;
-                var canvas = document.createElement("canvas");
-                canvas.width = width * dpi;
-                canvas.height = height * dpi;
-                canvas.style.width = width + "px";
-                var context = canvas.getContext("2d");
-                context.scale(dpi, dpi);
-                return context;
-            }
+           
 
 
             let pyodide = await pyodide2;                                       // Loads pyodide object initialized in main function
@@ -113,15 +103,7 @@ headers:  {'Access-Control-Allow-Origin': "*","Access-Control-Allow-Methods": "D
 
   console.log(content);
 
-            var image=document.getElementById("output")                         // Sets image source to input file URL (displays image)
-            image.src=URL.createObjectURL(event.target.files[0]);
 
-            blob=(event.target.files[0]);                                       // Gets image blob and converts to data array variabler dater (makes use of context2d)
-            const bitmap = await createImageBitmap(blob);
-            const [width, height] = [bitmap.width, bitmap.height];
-            const ctx = context2d(width, height, 1);
-            ctx.drawImage(bitmap, 0, 0);
-            var dater = ctx.getImageData(0, 0, width, height).data;
 
             dater ="im=np.array(["+dater+"])"                                   // Turns dater string into python executable string
             pyodide.runPython(dater)                                            // Executes dater string in python
@@ -129,13 +111,6 @@ headers:  {'Access-Control-Allow-Origin': "*","Access-Control-Allow-Methods": "D
 
 
  
-            pyodide.runPython(`
-            img28x28=np.resize(im,(28,28))                      # Reshapes data into 28 x 28 matrix
-            img_flat=img28x28.reshape(-1,1).T                   # Flattens to 1D Array
-            df = pd.DataFrame(img_flat).T                       # Converts to panda dataframe
-            print(img28x28)
-            print(img_flat)
-            print(df)
             
             def allowSelfSignedHttps(allowed):
                 # bypass the server certificate verification on client side
