@@ -54,7 +54,7 @@ def index():
         # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
         print(error.info())
         print(error.read().decode("utf8", 'ignore'))
-    return render_template("DiabetesTest2_JS_M.html", output=output)
+    return render_template("index.html", output=output)
 
 if __name__ == "__main__":
     app.run()
