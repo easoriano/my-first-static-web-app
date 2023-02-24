@@ -1,5 +1,9 @@
 from flask import Flask, render_template
-
+import urllib.request
+import json
+import os
+import ssl
+    
 app = Flask(__name__)
 
 @app.route("/")
@@ -7,10 +11,6 @@ def index():
     # Your Python code here
     endpoint = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score'
     key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'
-
-    import urllib.request
-    import json
-    import os
 
     data =  {
         "Inputs": {
@@ -54,6 +54,7 @@ def index():
         # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
         print(error.info())
         print(error.read().decode("utf8", 'ignore'))
+    
     return render_template("index.html", output=output)
 
 if __name__ == "__main__":
