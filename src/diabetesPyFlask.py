@@ -6,7 +6,7 @@ import ssl
     
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("https://ambitious-water-0d40d801e.2.azurestaticapps.net/")
 def index():
     # Your Python code here
     endpoint = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score'
