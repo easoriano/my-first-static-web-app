@@ -4,10 +4,11 @@ function hello()
 {
   document.getElementById("button1").innerHTML="HELLO";
 }
-function diabeties()
-{
- const endpoint = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score';
- const key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ';
+window.onload = function(){
+  function diabeties()
+  {
+  const endpoint = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score';
+  const key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ';
 
         const data = {
         "Inputs": {
@@ -47,8 +48,9 @@ function diabeties()
             console.error(`The request failed with status code: ${error.status}`);
             console.error(error);
         }
-       
+
         };
 
-        document.getElementById("button2").addEventListener("click", fetchData);
+        document.getElementById("button").addEventListener("click", fetchData);
+  }
 }
