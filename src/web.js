@@ -50,5 +50,5 @@ function diabeties()
        
         };
 
-        fetchData();
+        document.getElementById("button2").addEventListener("click", fetchData);
 }
