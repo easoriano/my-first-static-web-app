@@ -1,5 +1,4 @@
-var x=0;
-
+/*
 window.onload = function(){
   function diabeties()
   {
@@ -50,3 +49,4 @@ window.onload = function(){
           document.getElementById("button2").addEventListener("click", fetchData);
   }
 }
+*/
