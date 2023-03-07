@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
     <html>
         <head>
           <title>My Page</title>
@@ -13,7 +13,7 @@
                         <button type = "button1" onclick = "diabeties()" value = "Display">  
  
         </body>  
-</html>
+</html>-->
 
 <!--<html>
   <head>
@@ -26,3 +26,98 @@
     <p>Probability: {{ output.Probability }}</p>
   </body>
 </html>-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Web Page</title>
+</head>
+<body>
+
+	<h1>Predict Diabetes</h1>
+
+	<form id="myForm">
+		<label for="PatientID">Patient ID:</label>
+		<input type="text" id="PatientID" name="PatientID"><br>
+
+		<label for="Pregnancies">Pregnancies:</label>
+		<input type="text" id="Pregnancies" name="Pregnancies"><br>
+
+		<label for="PlasmaGlucose">Plasma Glucose:</label>
+		<input type="text" id="PlasmaGlucose" name="PlasmaGlucose"><br>
+
+		<label for="DiastolicBloodPressure">Diastolic Blood Pressure:</label>
+		<input type="text" id="DiastolicBloodPressure" name="DiastolicBloodPressure"><br>
+
+		<label for="TricepsThickness">Triceps Thickness:</label>
+		<input type="text" id="TricepsThickness" name="TricepsThickness"><br>
+
+		<label for="SerumInsulin">Serum Insulin:</label>
+		<input type="text" id="SerumInsulin" name="SerumInsulin"><br>
+
+		<label for="BMI">BMI:</label>
+		<input type="text" id="BMI" name="BMI"><br>
+
+		<label for="DiabetesPedigree">Diabetes Pedigree:</label>
+		<input type="text" id="DiabetesPedigree" name="DiabetesPedigree"><br>
+
+		<label for="Age">Age:</label>
+		<input type="text" id="Age" name="Age"><br><br>
+
+		<button type="button" onclick="predictDiabetes()">Submit</button>
+	</form>
+
+	<p id="result"></p>
+
+	<script>
+		// Your JavaScript code goes here
+        const https = require('https');
+
+        const data = {
+  "Inputs": {
+    "input1": [
+      {
+        "PatientID": 1882185,
+        "Pregnancies": 9,
+        "PlasmaGlucose": 104,
+        "DiastolicBloodPressure": 51,
+        "TricepsThickness": 7,
+        "SerumInsulin": 24,
+        "BMI": 27.36983156,
+        "DiabetesPedigree": 1.3504720469999998,
+        "Age": 43
+      }
+    ]
+  },
+  "GlobalParameters": {}
+};
+
+const options = {
+  hostname: '20.252.33.64',
+  port: 443,
+  path: '/api/v1/service/predict-diabetes/score',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'
+  }
+};
+
+const req = https.request(options, (res) => {
+  console.log(`statusCode: ${res.statusCode}`);
+  res.on('data', (d) => {
+    process.stdout.write(d);
+  });
+});
+
+req.on('error', (error) => {
+  console.error(error);
+});
+
+req.write(JSON.stringify(data));
+req.end();
+
+	</script>
+
+</body>
+</html>
