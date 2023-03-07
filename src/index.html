@@ -30,31 +30,51 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>My HTML Page</title>
-  </head>
-  <body>
-    <h1>My HTML Page</h1>
-    <script>
-      // Insert the JavaScript code here
-        const RCurl = require('rcurl');
-const rjson = require('rjson');
+<head>
+	<title>My Web Page</title>
+</head>
+<body>
 
-// Accept SSL certificates issued by public Certificate Authorities
-RCurl.options.RCurlOptions = {
-  cainfo: RCurl.system.file("CurlSSL", "cacert.pem", package = "RCurl"),
-  ssl_verifypeer: false
-};
+	<h1>Predict Diabetes</h1>
 
-const h = new RCurl.basicTextGatherer();
-const hdr = new RCurl.basicHeaderGatherer();
+	<form id="myForm">
+		<label for="PatientID">Patient ID:</label>
+		<input type="text" id="PatientID" name="PatientID"><br>
 
-// Request data goes here
-// The example below assumes JSON formatting which may be updated
-// depending on the format your endpoint expects.
-// More information can be found here:
-// https://docs.microsoft.com/azure/machine-learning/how-to-deploy-advanced-entry-script
-const req = rjson.fromJSON('{
+		<label for="Pregnancies">Pregnancies:</label>
+		<input type="text" id="Pregnancies" name="Pregnancies"><br>
+
+		<label for="PlasmaGlucose">Plasma Glucose:</label>
+		<input type="text" id="PlasmaGlucose" name="PlasmaGlucose"><br>
+
+		<label for="DiastolicBloodPressure">Diastolic Blood Pressure:</label>
+		<input type="text" id="DiastolicBloodPressure" name="DiastolicBloodPressure"><br>
+
+		<label for="TricepsThickness">Triceps Thickness:</label>
+		<input type="text" id="TricepsThickness" name="TricepsThickness"><br>
+
+		<label for="SerumInsulin">Serum Insulin:</label>
+		<input type="text" id="SerumInsulin" name="SerumInsulin"><br>
+
+		<label for="BMI">BMI:</label>
+		<input type="text" id="BMI" name="BMI"><br>
+
+		<label for="DiabetesPedigree">Diabetes Pedigree:</label>
+		<input type="text" id="DiabetesPedigree" name="DiabetesPedigree"><br>
+
+		<label for="Age">Age:</label>
+		<input type="text" id="Age" name="Age"><br><br>
+
+		<button type="button" onclick="predictDiabetes()">Submit</button>
+	</form>
+
+	<p id="result"></p>
+
+	<script>
+		// Your JavaScript code goes here
+        const https = require('https');
+
+        const data = {
   "Inputs": {
     "input1": [
       {
@@ -67,63 +87,39 @@ const req = rjson.fromJSON('{
         "BMI": 27.36983156,
         "DiabetesPedigree": 1.3504720469999998,
         "Age": 43
-      },
-      {
-        "PatientID": 1662484,
-        "Pregnancies": 6,
-        "PlasmaGlucose": 73,
-        "DiastolicBloodPressure": 61,
-        "TricepsThickness": 35,
-        "SerumInsulin": 24,
-        "BMI": 18.74367404,
-        "DiabetesPedigree": 1.074147566,
-        "Age": 75
-      },
-      {
-        "PatientID": 1228510,
-        "Pregnancies": 4,
-        "PlasmaGlucose": 115,
-        "DiastolicBloodPressure": 50,
-        "TricepsThickness": 29,
-        "SerumInsulin": 243,
-        "BMI": 34.69215364,
-        "DiabetesPedigree": 0.7411599259999999,
-        "Age": 59
       }
     ]
   },
   "GlobalParameters": {}
-}');
+};
 
-const requestBody = RCurl.enc2utf8(rjson.toJSON(req));
-// Replace this with the primary/secondary key or AMLToken for the endpoint
-let api_key = "crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ";
-if (api_key === "" || typeof api_key !== 'string')
-{
-    throw new Error("A key should be provided to invoke the endpoint");
-}
-const authz_hdr = `Bearer ${api_key}`;
+const options = {
+  hostname: '20.252.33.64',
+  port: 443,
+  path: '/api/v1/service/predict-diabetes/score',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'
+  }
+};
 
-h.reset();
+const req = https.request(options, (res) => {
+  console.log(`statusCode: ${res.statusCode}`);
+  res.on('data', (d) => {
+    process.stdout.write(d);
+  });
+});
 
-// The azureml-model-deployment header will force the request to go to a specific deployment.
-// Remove this header to have the request observe the endpoint traffic rules
-RCurl.curlPerform(
-    url = "http://20.252.33.64:80/api/v1/service/predict-diabetes/score",
-    httpheader = [
-        'Content-Type: application/json',
-        `Authorization: ${authz_hdr}`,
-        'azureml-model-deployment-id: 00000000-0000-0000-0000-000000000000'
-    ],
-    postfields = requestBody,
-    writefunction = h.update,
-    headerfunction = hdr.update,
-    verbose = true
-);
+req.on('error', (error) => {
+  console.error(error);
+});
 
-const headers = hdr.value();
-const httpStatus = headers["status"];
+req.write(JSON.stringify(data));
+req.end();
 
-    </script>
-  </body>
+	</script>
+
+</body>
 </html>
+
