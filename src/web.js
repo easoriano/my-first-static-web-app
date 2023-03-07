@@ -77,7 +77,7 @@ const options = {
   body: JSON.stringify(data)
 };
 
-fetch('https://20.252.33.64/api/v1/service/predict-diabetes/score', options)
+fetch('http://20.252.33.64/api/v1/service/predict-diabetes/score', options)
   .then(response => {
     console.log(`statusCode: ${response.status}`);
     return response.json();
