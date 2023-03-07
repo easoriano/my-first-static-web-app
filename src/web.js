@@ -6,18 +6,18 @@ const endpoint = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score';
 const key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ';
 
       const data = {
-      "Inputs": {
-          "input1": [
+      Inputs: {
+          input1: [
           {
-              'PatientID': 1882185,
-              'Pregnancies': 9,
-              'PlasmaGlucose': 104,
-              'DiastolicBloodPressure': 51,
-              'TricepsThickness': 7,
-              'SerumInsulin': 24,
-              'BMI': 27.36983156,
-              'DiabetesPedigree': 1.35047204699998,
-              'Age': 43,
+              PatientID: 1882185,
+              Pregnancies: 9,
+              PlasmaGlucose: 104,
+              DiastolicBloodPressure: 51,
+              TricepsThickness: 7,
+              SerumInsulin: 24,
+              BMI: 27.36983156,
+              DiabetesPedigree: 1.35047204699998,
+              Age: 43,
           },
           ],
       },
