@@ -1,4 +1,4 @@
-var x=0;
+
 
 function diabeties()
 {
@@ -45,8 +45,8 @@ const key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ';
       }
 
       };
-
+      document.getElementById("button").addEventListener("onclick", diabeties);
 }
 window.onload = function(){
-  document.getElementById("button").addEventListener("onclick", diabeties);
+  
 }
