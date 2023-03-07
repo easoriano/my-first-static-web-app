@@ -48,5 +48,5 @@ const key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ';
 
 }
 window.onload = function(){
-  document.getElementById("button").addEventListener("click", fetchData);
+  document.getElementById("button").addEventListener("click", fetchData());
 }
