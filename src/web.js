@@ -49,3 +49,48 @@ function diabeties()
       
 }
 */
+const https = require('https');
+
+const data = {
+  "Inputs": {
+    "input1": [
+      {
+        "PatientID": 1882185,
+        "Pregnancies": 9,
+        "PlasmaGlucose": 104,
+        "DiastolicBloodPressure": 51,
+        "TricepsThickness": 7,
+        "SerumInsulin": 24,
+        "BMI": 27.36983156,
+        "DiabetesPedigree": 1.3504720469999998,
+        "Age": 43
+      }
+    ]
+  },
+  "GlobalParameters": {}
+};
+
+const options = {
+  hostname: '20.252.33.64',
+  port: 443,
+  path: '/api/v1/service/predict-diabetes/score',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'
+  }
+};
+
+const req = https.request(options, (res) => {
+  console.log(`statusCode: ${res.statusCode}`);
+  res.on('data', (d) => {
+    process.stdout.write(d);
+  });
+});
+
+req.on('error', (error) => {
+  console.error(error);
+});
+
+req.write(JSON.stringify(data));
+req.end();
