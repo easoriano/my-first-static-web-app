@@ -48,5 +48,5 @@ const key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ';
 
 }
 window.onload = function(){
-  document.getElementById("button").addEventListener("click", diabeties());
+  document.getElementById("button").addEventListener("onclick", fetchData);
 }
