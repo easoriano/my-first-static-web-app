@@ -1,9 +1,10 @@
 
-document.getElementById("button").addEventListener("click", diabeties);
-function diabeties()
-{
+document.getElementById("button1").addEventListener("click", diabeties);
 const endpoint = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score';
 const key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ';
+function diabeties()
+{
+
 
       const data = {
       Inputs: {
