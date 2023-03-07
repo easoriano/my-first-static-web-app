@@ -49,8 +49,6 @@ function diabeties()
       
 }
 */
-const https = require('https');
-
 const data = {
   "Inputs": {
     "input1": [
@@ -71,26 +69,22 @@ const data = {
 };
 
 const options = {
-  hostname: '20.252.33.64',
-  port: 443,
-  path: '/api/v1/service/predict-diabetes/score',
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'
-  }
+  },
+  body: JSON.stringify(data)
 };
 
-const req = https.request(options, (res) => {
-  console.log(`statusCode: ${res.statusCode}`);
-  res.on('data', (d) => {
-    process.stdout.write(d);
+fetch('https://20.252.33.64/api/v1/service/predict-diabetes/score', options)
+  .then(response => {
+    console.log(`statusCode: ${response.status}`);
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error(error);
   });
-});
-
-req.on('error', (error) => {
-  console.error(error);
-});
-
-req.write(JSON.stringify(data));
-req.end();
