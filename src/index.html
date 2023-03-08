@@ -35,11 +35,59 @@
   </head>
   <body>
     <h1>My Diabetes Results</h1>
-    <div id="results"></div>
     <button onclick="getDiabetesResults()">Get Results</button>
-    <script src="web.js"></script>
+    <p id="diabetes-results"></p>
+    <script>
+      function getDiabetesResults() {
+        const data = {
+          "Inputs": {
+            "input1": [
+              {
+                "PatientID": 1882185,
+                "Pregnancies": 9,
+                "PlasmaGlucose": 104,
+                "DiastolicBloodPressure": 51,
+                "TricepsThickness": 7,
+                "SerumInsulin": 24,
+                "BMI": 27.36983156,
+                "DiabetesPedigree": 1.3504720469999998,
+                "Age": 43
+              }
+            ]
+          },
+          "GlobalParameters": {}
+        };
+        const postData = JSON.stringify(data);
+        const options = {
+          hostname: '20.252.33.64',
+          port: 80,
+          path: '/api/v1/service/predict-diabetes/score',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': postData.length,
+            'Authorization': 'Bearer ' + crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ,
+          }
+        };
+        const req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            const response = JSON.parse(this.responseText);
+            const labels = response.Results.output1[0].Scored Labels;
+            const probability = response.Results.output1[0].Scored Probabilities[1];
+            const message = `The patient is predicted to have diabetes with a probability of ${probability.toFixed(2)}%`;
+            document.getElementById("diabetes-results").innerHTML = message;
+          }
+        };
+        req.open("POST", "http://20.252.33.64/api/v1/service/predict-diabetes/score", true);
+        req.setRequestHeader("Content-Type", "application/json");
+        req.setRequestHeader("Authorization", "Bearer " + crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ);
+        req.send(postData);
+      }
+    </script>
   </body>
 </html>
+
 
 
 
