@@ -35,11 +35,10 @@
   </head>
   <body>
     <h1>My Diabetes Results</h1>
-    <button onclick="getDiabetesResults()">Get Results</button>
-    <p id="diabetes-results"></p>
+    <div id="results"></div>
     <script>
       function getDiabetesResults() {
-        const data = {
+        const data =  {
           "Inputs": {
             "input1": [
               {
@@ -57,7 +56,9 @@
           },
           "GlobalParameters": {}
         };
+
         const postData = JSON.stringify(data);
+
         const options = {
           hostname: '20.252.33.64',
           port: 80,
@@ -66,27 +67,39 @@
           headers: {
             'Content-Type': 'application/json',
             'Content-Length': postData.length,
-            'Authorization': 'Bearer ' + crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ,
+            'Authorization': 'Bearer ' + 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ',
           }
         };
-        const req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            const response = JSON.parse(this.responseText);
-            const labels = response.Results.output1[0].Scored Labels;
-            const probability = response.Results.output1[0].Scored Probabilities[1];
-            const message = `The patient is predicted to have diabetes with a probability of ${probability.toFixed(2)}%`;
-            document.getElementById("diabetes-results").innerHTML = message;
-          }
-        };
-        req.open("POST", "http://20.252.33.64/api/v1/service/predict-diabetes/score", true);
-        req.setRequestHeader("Content-Type", "application/json");
-        req.setRequestHeader("Authorization", "Bearer " + crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ);
-        req.send(postData);
+
+        const req = https.request(options, (res) => {
+          console.log(`statusCode: ${res.statusCode}`);
+          let responseData = '';
+
+          res.on('data', (d) => {
+            responseData += d;
+          });
+
+          res.on('end', () => {
+            const results = JSON.parse(responseData);
+            const labels = results.Results.output1[0].Scored Labels;
+            const probability = results.Results.output1[0].Scored Probabilities;
+            const html = `<p>Labels: ${labels}</p><p>Probability: ${probability}</p>`;
+            document.getElementById('results').innerHTML = html;
+          });
+        });
+
+        req.on('error', (error) => {
+          console.error(error);
+        });
+
+        req.write(postData);
+        req.end();
       }
+      getDiabetesResults();
     </script>
   </body>
 </html>
+
 
 
 
