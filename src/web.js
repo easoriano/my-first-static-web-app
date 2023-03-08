@@ -1,9 +1,9 @@
 
-/*document.getElementById("button1").addEventListener("click", diabeties);
+document.getElementById("button1").addEventListener("click", diabeties);
 
 function diabeties()
 {
-      const endpoint = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score';
+      const endpoint = 'http://20.252.33.64:443/api/v1/service/predict-diabetes/score';
       const key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ';
       
       const data = {
@@ -48,7 +48,7 @@ function diabeties()
       };
       
 }
-*/
+
 /*const data = {
   "Inputs": {
     "input1": [
@@ -90,7 +90,7 @@ fetch('http://20.252.33.64/api/v1/service/predict-diabetes/score', options)
   });
 */
 
-const https = require('https');
+/*const https = require('https');
 
 const data =  {
   "Inputs": {
@@ -153,4 +153,4 @@ function getDiabetesResults(prediction) {
   } else {
     diabetesResults.innerHTML = "You have diabetes.";
   }
-}
+}*/
