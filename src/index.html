@@ -27,80 +27,66 @@
   </body>
 </html>-->
 
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <title>My HTML Page</title>
+    <title>Invoke Azure ML Service</title>
   </head>
   <body>
-    <h1>My Diabetes Results</h1>
-    <div id="results"></div>
     <script>
-      function getDiabetesResults() {
-        const data =  {
-          "Inputs": {
-            "input1": [
-              {
-                "PatientID": 1882185,
-                "Pregnancies": 9,
-                "PlasmaGlucose": 104,
-                "DiastolicBloodPressure": 51,
-                "TricepsThickness": 7,
-                "SerumInsulin": 24,
-                "BMI": 27.36983156,
-                "DiabetesPedigree": 1.3504720469999998,
-                "Age": 43
-              }
-            ]
-          },
-          "GlobalParameters": {}
-        };
+      const data = {
+        "Inputs": {
+          "input1": [
+            {
+              "PatientID": 1882185,
+              "Pregnancies": 9,
+              "PlasmaGlucose": 104,
+              "DiastolicBloodPressure": 51,
+              "TricepsThickness": 7,
+              "SerumInsulin": 24,
+              "BMI": 27.36983156,
+              "DiabetesPedigree": 1.3504720469999998,
+              "Age": 43
+            }
+          ]
+        },
+        "GlobalParameters": {}
+      };
 
-        const postData = JSON.stringify(data);
+      const url = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score';
+      const api_key = ''; // Replace this with the primary/secondary key or AMLToken for the endpoint
+      if (!api_key) {
+        throw new Error("A key should be provided to invoke the endpoint");
+      }
 
-        const options = {
-          hostname: '20.252.33.64',
-          port: 80,
-          path: '/api/v1/service/predict-diabetes/score',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': postData.length,
-            'Authorization': 'Bearer ' + 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ',
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${api_key}`
+      };
+
+      fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
           }
-        };
-
-        const req = https.request(options, (res) => {
-          console.log(`statusCode: ${res.statusCode}`);
-          let responseData = '';
-
-          res.on('data', (d) => {
-            responseData += d;
-          });
-
-          res.on('end', () => {
-            const results = JSON.parse(responseData);
-            const labels = results.Results.output1[0].Scored Labels;
-            const probability = results.Results.output1[0].Scored Probabilities;
-            const html = `<p>Labels: ${labels}</p><p>Probability: ${probability}</p>`;
-            document.getElementById('results').innerHTML = html;
-          });
-        });
-
-        req.on('error', (error) => {
+          return response.json();
+        })
+        .then(result => {
+          console.log(result);
+        })
+        .catch(error => {
           console.error(error);
         });
-
-        req.write(postData);
-        req.end();
-      }
-      getDiabetesResults();
     </script>
   </body>
-</html>-->
+</html>
 
-<!DOCTYPE html>
+
+<!--<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -113,5 +99,5 @@
 <script src="web.js">
 </script>
   </body>
-</html>
+</html>-->
 
