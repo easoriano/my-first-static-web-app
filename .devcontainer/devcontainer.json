@@ -23,6 +23,9 @@
 				"ms-azuretools.vscode-azurestaticwebapps",
 				"ms-dotnettools.csharp",
 				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"ms-kubernetes-tools.vscode-aks-tools",
 				"dbaeumer.vscode-eslint"
 			]
 		}
