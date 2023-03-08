@@ -90,59 +90,54 @@ fetch('http://20.252.33.64/api/v1/service/predict-diabetes/score', options)
   });
 */
 
-const https = require('https');
-const querystring = require('querystring');
+function getDiabetesResults() {
+  const data = {
+    "Inputs": {
+      "input1": [
+        {
+          "PatientID": 1882185,
+          "Pregnancies": 9,
+          "PlasmaGlucose": 104,
+          "DiastolicBloodPressure": 51,
+          "TricepsThickness": 7,
+          "SerumInsulin": 24,
+          "BMI": 27.36983156,
+          "DiabetesPedigree": 1.3504720469999998,
+          "Age": 43
+        }
+      ]
+    },
+    "GlobalParameters": {}
+  };
 
-const data =  {
-  "Inputs": {
-    "input1": [
-      {
-        "PatientID": 1882185,
-        "Pregnancies": 9,
-        "PlasmaGlucose": 104,
-        "DiastolicBloodPressure": 51,
-        "TricepsThickness": 7,
-        "SerumInsulin": 24,
-        "BMI": 27.36983156,
-        "DiabetesPedigree": 1.3504720469999998,
-        "Age": 43
-      }
-    ]
-  },
-  "GlobalParameters": {}
-};
+  const postData = JSON.stringify(data);
 
-const postData = JSON.stringify(data);
+  const options = {
+    hostname: '20.252.33.64',
+    port: 80,
+    path: '/api/v1/service/predict-diabetes/score',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': postData.length,
+      'Authorization': 'Bearer ' + crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ,
+    }
+  };
 
-const options = {
-  hostname: '20.252.33.64',
-  port: 80,
-  path: '/api/v1/service/predict-diabetes/score',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Content-Length': postData.length,
-    'Authorization': 'Bearer ' + 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ',
-  }
-};
+  const req = https.request(options, (res) => {
+    console.log(`statusCode: ${res.statusCode}`);
 
-const req = https.request(options, (res) => {
-  console.log(`statusCode: ${res.statusCode}`);
-
-  let result = '';
-
-  res.on('data', (d) => {
-    result += d;
+    res.on('data', (d) => {
+      const result = JSON.parse(d.toString());
+      const prediction = result.Results.output1[0].Scored Labels;
+      document.getElementById('results').innerHTML = `Prediction: ${prediction}`;
+    });
   });
 
-  res.on('end', () => {
-    document.getElementById('results').innerHTML = result;
+  req.on('error', (error) => {
+    console.error(error);
   });
-});
 
-req.on('error', (error) => {
-  console.error(error);
-});
-
-req.write(postData);
-req.end();
+  req.write(postData);
+  req.end();
+}
