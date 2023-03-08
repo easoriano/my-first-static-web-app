@@ -33,7 +33,9 @@
     <title>Invoke Azure ML Service</title>
   </head>
   <body>
-    <script>
+      <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <py-script>
       import urllib.request
 import json
 import os
@@ -47,8 +49,8 @@ def allowSelfSignedHttps(allowed):
 allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
 
 # set up a proxy handler
-proxy_handler = urllib.request.ProxyHandler({'http': 'http://<proxy_host>:<proxy_port>',
-                                              'https': 'https://<proxy_host>:<proxy_port>'})
+proxy_handler = urllib.request.ProxyHandler({'http': 'http://20.252.33.64:80',
+                                              'https': 'https://ambitious-water-0d40d801e.2.azurestaticapps.net:37'})
 # replace <proxy_host> and <proxy_port> with your proxy server host and port
 
 # create an opener with the proxy handler
@@ -126,7 +128,7 @@ except urllib.error.HTTPError as error:
     # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
     print(error.info())
 
-    </script>
+    </py-script>
   </body>
 </html>
 
