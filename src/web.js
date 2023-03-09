@@ -1,5 +1,5 @@
 
-document.getElementById("button1").addEventListener("click", diabeties);
+/*document.getElementById("button1").addEventListener("click", diabeties);
 
 function diabeties()
 {
@@ -48,7 +48,7 @@ function diabeties()
       };
       
 }
-
+*/
 /*const data = {
   "Inputs": {
     "input1": [
