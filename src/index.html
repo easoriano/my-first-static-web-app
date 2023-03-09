@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
     <html>
         <head>
           <title>My Page</title>
@@ -13,7 +13,7 @@
                         <button type = "button1" onclick = "diabeties()" value = "Display">  
  
         </body>  
-</html>
+</html>-->
 
 <!--<html>
   <head>
@@ -147,4 +147,62 @@ except urllib.error.HTTPError as error:
 </script>
   </body>
 </html>-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Invoke Azure ML Service</title>
+  </head>
+  <body>
+    <script>
+      const data = {
+        "Inputs": {
+          "input1": [
+            {
+              "PatientID": 1882185,
+              "Pregnancies": 9,
+              "PlasmaGlucose": 104,
+              "DiastolicBloodPressure": 51,
+              "TricepsThickness": 7,
+              "SerumInsulin": 24,
+              "BMI": 27.36983156,
+              "DiabetesPedigree": 1.3504720469999998,
+              "Age": 43
+            }
+          ]
+        },
+        "GlobalParameters": {}
+      };
+
+      const url = 'https://20.252.33.64:443/api/v1/service/predict-diabetes/score';
+      const api_key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'; // Replace this with the primary/secondary key or AMLToken for the endpoint
+      if (!api_key) {
+        throw new Error("A key should be provided to invoke the endpoint");
+      }
+
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${api_key}`
+      };
+
+      fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(result => {
+          console.log(result);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    </script>
+  </body>
+</html>
 
