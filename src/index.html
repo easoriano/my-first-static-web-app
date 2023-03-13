@@ -189,7 +189,7 @@ except urllib.error.HTTPError as error:
 
       fetch(url, {
         method: "POST",
-        credentials: "omit",
+        credentials: "same-origin",
         headers: headers,
         body: JSON.stringify(data),
       })
