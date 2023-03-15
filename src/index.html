@@ -189,8 +189,8 @@ except urllib.error.HTTPError as error:
 
       fetch(url, {
         method: "POST",
-        host: "projectapiforweb.azure-api.net/score/http://20.252.33.64:80/api/v1/service/predict-diabetes/score"
-        origin: "https://ambitious-water-0d40d801e.2.azurestaticapps.net/"
+        Host: "projectapiforweb.azure-api.net/score/http://20.252.33.64:80/api/v1/service/predict-diabetes/score"
+        Origin: "https://ambitious-water-0d40d801e.2.azurestaticapps.net/"
         credentials: "include",
         headers: headers,
         body: JSON.stringify(data),
