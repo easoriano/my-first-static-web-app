@@ -195,6 +195,7 @@ except urllib.error.HTTPError as error:
         credentials: "include",
         headers: headers,
         body: JSON.stringify(data),
+        mode: 'no-cors'
       })
         .then(response => {
           if (!response.ok) {
