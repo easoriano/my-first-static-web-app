@@ -176,7 +176,7 @@ except urllib.error.HTTPError as error:
         "GlobalParameters": {}
       };
 
-      const url = 'https://projectapiforweb.azure-api.net/score/https://ambitious-water-0d40d801e.2.azurestaticapps.net';
+      const url = 'https://projectapiforweb.azure-api.net/1/api/v1/service/predict-diabetes/score';
       const api_key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'; // Replace this with the primary/secondary key or AMLToken for the endpoint
       if (!api_key) {
         throw new Error("A key should be provided to invoke the endpoint");
@@ -185,12 +185,12 @@ except urllib.error.HTTPError as error:
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${api_key}`,
-        "Access-Control-Allow-Origin": "https://projectapiforweb.azure-api.net/score/http://20.252.33.64:80/api/v1/service/predict-diabetes/score"
+        "Access-Control-Allow-Origin": "https://projectapiforweb.azure-api.net/1/api/v1/service/predict-diabetes/scoree"
       };
 
       fetch(url, {
-        method: "POST",
-        Host: "https://projectapiforweb.azure-api.net/score/http://20.252.33.64:80/api/v1/service/predict-diabetes/score",
+        method: "POST https://projectapiforweb.azure-api.net/1/api/v1/service/predict-diabetes/score HTTP/1.1",
+        Host: "projectapiforweb.azure-api.net",
         Origin: "https://ambitious-water-0d40d801e.2.azurestaticapps.net/",
         credentials: "include",
         headers: headers,
