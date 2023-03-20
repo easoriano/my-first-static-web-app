@@ -188,7 +188,7 @@ except urllib.error.HTTPError as error:
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${api_key}`,
-        "Access-Control-Allow-Origin": 'no-cors'
+        "Access-Control-Allow-Origin": 'https://projectapiforweb.azure-api.net'
       };
 
       fetch(url, {
