@@ -185,14 +185,14 @@ except urllib.error.HTTPError as error:
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${api_key}`,
-        "Access-Control-Allow-Origin": "https://projectapiforweb.azure-api.net/1/api/v1/service/predict-diabetes/score"
+        "Access-Control-Allow-Origin": *
       };
 
       fetch(url, {
         method: "POST",
         Host: "projectapiforweb.azure-api.net",
         Origin: "https://ambitious-water-0d40d801e.2.azurestaticapps.net/",
-        <!--credentials: "include",-->
+        credentials: "include",
         headers: headers,
         body: JSON.stringify(data)
       })
