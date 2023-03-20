@@ -185,7 +185,7 @@ except urllib.error.HTTPError as error:
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${api_key}`,
-        "Access-Control-Allow-Origin": *
+        "Access-Control-Allow-Origin": 'https://ambitious-water-0d40d801e.2.azurestaticapps.net'
       };
 
       fetch(url, {
