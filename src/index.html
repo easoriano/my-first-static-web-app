@@ -194,7 +194,8 @@ except urllib.error.HTTPError as error:
         <!--Origin: "https://ambitious-water-0d40d801e.2.azurestaticapps.net",-->
         credentials: "include",
         headers: headers,
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        mode: "no-cors"
       })
         .then(response => {
           if (!response.ok) {
