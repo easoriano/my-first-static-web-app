@@ -195,11 +195,11 @@ except urllib.error.HTTPError as error:
           method: "POST",
           <!--Host: "https://ambitious-water-0d40d801e.2.azurestaticapps.net",-->
           Host: "https://projectapiforweb.azure-api.net",
-          Origin: "https://projectapiforweb.azure-api.net",
+          Origin: "https://ambitious-water-0d40d801e.2.azurestaticapps.net",
           credentials: "omit",
           referrerPolicy: 'unsafe-url',
           headers: headers,
-          mode: "same-origin",
+          mode: "no-cors",
           body: JSON.stringify(data),
       })
         .then(response => {
