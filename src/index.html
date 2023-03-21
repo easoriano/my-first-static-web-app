@@ -187,7 +187,7 @@ except urllib.error.HTTPError as error:
 
       const headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${api_key}',
+        'Authorization': `Bearer ${api_key}`,
         <!--"Access-Control-Allow-Origin": 'https://projectapiforweb.azure-api.net'-->
       };
 
@@ -196,10 +196,10 @@ except urllib.error.HTTPError as error:
         <!--Host: "https://ambitious-water-0d40d801e.2.azurestaticapps.net",-->
         Host: "https://projectapiforweb.azure-api.net",
         Origin: "https://projectapiforweb.azure-api.net",
-        credentials: "include",
+        <!--credentials: "include",-->
         headers: headers,
         body: JSON.stringify(data),
-        mode: "no-cors"
+        <!--mode: "no-cors"-->
       })
         .then(response => {
           if (!response.ok) {
