@@ -1,0 +1,204 @@
+<!--<!DOCTYPE html>
+    <html>
+        <head>
+          <title>My Page</title>
+            </head>
+                <body>
+                     <h1>My Diabeties</h1>
+                        
+                
+                        <script type = "text/javascript" src="web.js"></script>
+         
+                        <p>Click the following button to see the function in action</p>  
+                        <button type = "button1" onclick = "diabeties()" value = "Display">  
+ 
+        </body>  
+</html>-->
+
+<!--<html>
+  <head>
+    <title>My App</title>
+  </head>
+  <body>
+    <h1>Output</h1>
+    <p>PatientID: {{ output.PatientID }}</p>
+    <p>DiabetesPrediction: {{ output.DiabetesPrediction }}</p>
+    <p>Probability: {{ output.Probability }}</p>
+  </body>
+</html>-->
+
+<!--<!DOCTYPE html>
+<html>
+  <head>
+    <title>Invoke Azure ML Service</title>
+  </head>
+  <body>
+      <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <py-script>
+      import urllib.request
+import json
+import os
+import ssl
+def allowSelfSignedHttps(allowed):
+    # bypass the server certificate verification on client side
+    if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
+        ssl._create_default_https_context = ssl._create_unverified_context
+allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
+# set up a proxy handler
+proxy_handler = urllib.request.ProxyHandler({'http': 'http://20.252.33.64:80',
+                                              'https': 'https://ambitious-water-0d40d801e.2.azurestaticapps.net:37'})
+# replace <proxy_host> and <proxy_port> with your proxy server host and port
+# create an opener with the proxy handler
+opener = urllib.request.build_opener(proxy_handler)
+# install the opener as the default opener for all urllib requests
+urllib.request.install_opener(opener)
+# Request data goes here
+# The example below assumes JSON formatting which may be updated
+# depending on the format your endpoint expects.
+# More information can be found here:
+# https://docs.microsoft.com/azure/machine-learning/how-to-deploy-advanced-entry-script
+data =  {
+  "Inputs": {
+    "input1": [
+      {
+        "PatientID": 1882185,
+        "Pregnancies": 9,
+        "PlasmaGlucose": 104,
+        "DiastolicBloodPressure": 51,
+        "TricepsThickness": 7,
+        "SerumInsulin": 24,
+        "BMI": 27.36983156,
+        "DiabetesPedigree": 1.3504720469999998,
+        "Age": 43
+      },
+      {
+        "PatientID": 1662484,
+        "Pregnancies": 6,
+        "PlasmaGlucose": 73,
+        "DiastolicBloodPressure": 61,
+        "TricepsThickness": 35,
+        "SerumInsulin": 24,
+        "BMI": 18.74367404,
+        "DiabetesPedigree": 1.074147566,
+        "Age": 75
+      },
+      {
+        "PatientID": 1228510,
+        "Pregnancies": 4,
+        "PlasmaGlucose": 115,
+        "DiastolicBloodPressure": 50,
+        "TricepsThickness": 29,
+        "SerumInsulin": 243,
+        "BMI": 34.69215364,
+        "DiabetesPedigree": 0.7411599259999999,
+        "Age": 59
+      }
+    ]
+  },
+  "GlobalParameters": {}
+}
+body = str.encode(json.dumps(data))
+url = 'http://20.252.33.64:80/api/v1/service/predict-diabetes/score'
+# Replace this with the primary/secondary key or AMLToken for the endpoint
+api_key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'
+if not api_key:
+    raise Exception("A key should be provided to invoke the endpoint")
+headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
+req = urllib.request.Request(url, body, headers)
+try:
+    response = urllib.request.urlopen(req)
+    result = response.read()
+    print(result)
+except urllib.error.HTTPError as error:
+    print("The request failed with status code: " + str(error.code))
+    # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
+    print(error.info())
+    </py-script>
+  </body>
+</html>-->
+
+
+<!--<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>My HTML Page</title>
+  </head>
+  <body>
+    <h1>My Diabetes Results</h1>
+    <div id="results"></div>
+      <button onclick="getDiabetesResults()">Get Results</button>
+<script src="web.js">
+</script>
+  </body>
+</html>-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Invoke Azure ML Service</title>
+  </head>
+  <body>
+      <h1>My Diabetes Results</h1>
+      
+    <div id="results"></div>
+    <script>
+      const data = {
+        "Inputs": {
+          "input1": [
+            {
+              "PatientID": 1882185,
+              "Pregnancies": 9,
+              "PlasmaGlucose": 104,
+              "DiastolicBloodPressure": 51,
+              "TricepsThickness": 7,
+              "SerumInsulin": 24,
+              "BMI": 27.36983156,
+              "DiabetesPedigree": 1.3504720469999998,
+              "Age": 43
+            }
+          ]
+        },
+        "GlobalParameters": {}
+      };
+
+      const url = 'https://projectapiforweb.azure-api.net/1/api/v1/service/predict-diabetes/score';
+      const api_key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'; // Replace this with the primary/secondary key or AMLToken for the endpoint
+      if (!api_key) {
+        throw new Error("A key should be provided to invoke the endpoint");
+      }
+
+      const header = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${api_key}`,
+      };
+
+      fetch(url, {
+          method: "POST",
+          <!--Host: "https://ambitious-water-0d40d801e.2.azurestaticapps.net",-->
+          Host: "projectapiforweb.azure-api.net",
+          Origin: "https://ambitious-water-0d40d801e.2.azurestaticapps.net",
+          referrerPolicy: 'no-referrer-when-downgrade',
+          Access-Control-Allow-Origin: '*',
+          headers: header,
+          mode: "cors",
+          body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(result => {
+          console.log(result);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    </script>
+  </body>
+</html>
