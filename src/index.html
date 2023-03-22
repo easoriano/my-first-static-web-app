@@ -199,7 +199,7 @@ except urllib.error.HTTPError as error:
           credentials: "omit",
           referrerPolicy: 'unsafe-url',
           headers: header,
-          mode: "no-cors",
+          mode: "",
           body: JSON.stringify(data)
       })
         .then(response => {
