@@ -160,6 +160,7 @@ except urllib.error.HTTPError as error:
       
     <div id="results"></div>
     <script>
+     const url = 'https://projectapiforweb.azure-api.net/1/api/v1/service/predict-diabetes/score';
       const data = {
         "Inputs": {
           "input1": [
@@ -173,45 +174,45 @@ except urllib.error.HTTPError as error:
               "BMI": 27.36983156,
               "DiabetesPedigree": 1.3504720469999998,
               "Age": 43
+            },
+            {
+              "PatientID": 1662484,
+              "Pregnancies": 6,
+              "PlasmaGlucose": 73,
+              "DiastolicBloodPressure": 61,
+              "TricepsThickness": 35,
+              "SerumInsulin": 24,
+              "BMI": 18.74367404,
+              "DiabetesPedigree": 1.074147566,
+              "Age": 75
+            },
+            {
+              "PatientID": 1228510,
+              "Pregnancies": 4,
+              "PlasmaGlucose": 115,
+              "DiastolicBloodPressure": 50,
+              "TricepsThickness": 29,
+              "SerumInsulin": 243,
+              "BMI": 34.69215364,
+              "DiabetesPedigree": 0.7411599259999999,
+              "Age": 59
             }
           ]
         },
         "GlobalParameters": {}
       };
-
-      const url = 'https://projectapiforweb.azure-api.net/score/http://20.252.33.64:80/api/v1/service/predict-diabetes/score';
-      const api_key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'; // Replace this with the primary/secondary key or AMLToken for the endpoint
-      if (!api_key) {
-        throw new Error("A key should be provided to invoke the endpoint");
-      }
-
-      const header = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${api_key}`,
-         'Host': "http://20.252.33.64:80/api/v1/service/predict-diabetes/score",
-         'Origin': "https://ambitious-water-0d40d801e.2.azurestaticapps.net",
-         'referrerPolicy': 'no-referrer-when-downgrade',
-         'Access-Control-Allow-Origin': '*',
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'
+        },
+        body: JSON.stringify(data)
       };
-
-      fetch(url, {
-          method: "POST",
-          headers: header,
-          mode: "cors",
-          body: JSON.stringify(data)
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(result => {
-          console.log(result);
-        })
-        .catch(error => {
-          console.error(error);
-        });
+      fetch(url, options)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
     </script>
   </body>
 </html>
