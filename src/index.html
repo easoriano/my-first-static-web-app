@@ -188,7 +188,6 @@ except urllib.error.HTTPError as error:
       const header = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${api_key}`,
-        'Access-Control-Allow-Origin': '*'
       };
 
       fetch(url, {
@@ -198,6 +197,7 @@ except urllib.error.HTTPError as error:
           Origin: "https://ambitious-water-0d40d801e.2.azurestaticapps.net",
           referrerPolicy: 'no-referrer-when-downgrade',
           headers: header,
+          Access-Control-Allow-Origin: '*',
           mode: "cors",
           body: JSON.stringify(data)
       })
