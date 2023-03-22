@@ -211,7 +211,7 @@ except urllib.error.HTTPError as error:
         headers: {
           'Content-Type': 'application/json',
            'Access-Control-Allow-Origin':'*',
-          'Authorization': `Bearer $(api_key)`,
+          'Authorization': `Bearer $(api_key)`
           
         },
         body: JSON.stringify(data)
