@@ -148,7 +148,7 @@ except urllib.error.HTTPError as error:
 </script>
   </body>
 </html>-->
-
+<!--"----------------------------------------------------------------------------------------------- "-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -209,11 +209,12 @@ except urllib.error.HTTPError as error:
       };
       const options = {
         method: 'POST',
+        setHeader: {"Access-Control-Allow-Origin": "http://projectapiforweb.azure-api.net"},
         headers: {
             'Host': 'projectapiforweb.azure-api.net',
             'Origin': 'https://ambitious-water-0d40d801e.2.azurestaticapps.net',
           'Content-Type': 'application/json',
-           'Access-Control-Allow-Origin':'http://projectapiforweb.azure-api.net',
+           'Access-Control-Allow-Headers':'[Origin, X-Requested-With, Content-Type, Accept]',
           'Authorization': `Bearer ${api_key}`
         },
         body: JSON.stringify(data)
