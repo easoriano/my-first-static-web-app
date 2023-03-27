@@ -213,7 +213,7 @@ except urllib.error.HTTPError as error:
             'Host': 'projectapiforweb.azure-api.net',
             'Origin': 'https://ambitious-water-0d40d801e.2.azurestaticapps.net',
           'Content-Type': 'application/json',
-           'Access-Control-Allow-Origin':'*',
+           'Access-Control-Allow-Origin':'http://projectapiforweb.azure-api.net',
           'Authorization': `Bearer ${api_key}`
         },
         body: JSON.stringify(data)
