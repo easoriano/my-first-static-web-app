@@ -209,12 +209,12 @@ except urllib.error.HTTPError as error:
       };
       const options = {
         method: 'POST',
-        setHeader: {"Access-Control-Allow-Origin": "http://projectapiforweb.azure-api.net"},
+        setHeader: {'Access-Control-Allow-Origin': "https://projectapiforweb.azure-api.net/1/api/v1/service/predict-diabetes/score"},
         headers: {
             'Host': 'projectapiforweb.azure-api.net',
             'Origin': 'https://ambitious-water-0d40d801e.2.azurestaticapps.net',
           'Content-Type': 'application/json',
-           'Access-Control-Allow-Headers':'[Origin, X-Requested-With, Content-Type, Accept]',
+           'Access-Control-Allow-Headers':'*',
           'Authorization': `Bearer ${api_key}`
         },
         body: JSON.stringify(data)
