@@ -159,7 +159,7 @@ except urllib.error.HTTPError as error:
   <body>
       <h1>My Diabetes Results</h1>
       
-    <div id="results"></div>
+    <div id="data"></div>
     <script>
        const api_key = 'nxaBjsB5MIUT4BP1EvrC3HmewZkp5AUp'; // Replace this with the primary/secondary key or AMLToken for the endpoint
       if (!api_key) {
@@ -191,11 +191,11 @@ except urllib.error.HTTPError as error:
         headers: {
             'Host': 'projectapiforweb.azure-api.net',
             'Origin': '*',
-            'Access-Control-Allow-Origin': "*",
+            'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
            'Access-Control-Allow-Headers':'*',
             'Access-Control-Allow-Methods':"POST",
-          'Authorization': `Bearer ${api_key}`
+          'Authorization': 'Bearer api_key'
         },
         body: JSON.stringify(data)
       };
