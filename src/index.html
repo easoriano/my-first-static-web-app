@@ -161,12 +161,12 @@ except urllib.error.HTTPError as error:
       
     <div id="results"></div>
     <script>
-       const api_key = 'crDbBjiIZb2mgOGcJQnT7BPFsR5R64QZ'; // Replace this with the primary/secondary key or AMLToken for the endpoint
+       const api_key = 'nxaBjsB5MIUT4BP1EvrC3HmewZkp5AUp'; // Replace this with the primary/secondary key or AMLToken for the endpoint
       if (!api_key) {
         throw new Error("A key should be provided to invoke the endpoint");
       }
 
-     const url = 'https://projectapiforweb.azure-api.net/1/api/v1/service/predict-diabetes/score';
+     const url = 'https://projectapiforweb.azure-api.net/v1/api/v1/service/aks-new-diabetes-prediction/score';
       const data = {
         "Inputs": {
           "input1": [
@@ -179,29 +179,8 @@ except urllib.error.HTTPError as error:
               "SerumInsulin": 24,
               "BMI": 27.36983156,
               "DiabetesPedigree": 1.3504720469999998,
-              "Age": 43
-            },
-            {
-              "PatientID": 1662484,
-              "Pregnancies": 6,
-              "PlasmaGlucose": 73,
-              "DiastolicBloodPressure": 61,
-              "TricepsThickness": 35,
-              "SerumInsulin": 24,
-              "BMI": 18.74367404,
-              "DiabetesPedigree": 1.074147566,
-              "Age": 75
-            },
-            {
-              "PatientID": 1228510,
-              "Pregnancies": 4,
-              "PlasmaGlucose": 115,
-              "DiastolicBloodPressure": 50,
-              "TricepsThickness": 29,
-              "SerumInsulin": 243,
-              "BMI": 34.69215364,
-              "DiabetesPedigree": 0.7411599259999999,
-              "Age": 59
+              "Age": 43,
+              "Diabetic": 0
             }
           ]
         },
@@ -211,8 +190,8 @@ except urllib.error.HTTPError as error:
         method: 'POST',
         headers: {
             'Host': 'projectapiforweb.azure-api.net',
-            'Origin': 'https://ambitious-water-0d40d801e.2.azurestaticapps.net',
-            'Access-Control-Allow-Origin': "https://ambitious-water-0d40d801e.2.azurestaticapps.net",
+            'Origin': '*',
+            'Access-Control-Allow-Origin': "*",
           'Content-Type': 'application/json',
            'Access-Control-Allow-Headers':'*',
             'Access-Control-Allow-Methods':"POST",
