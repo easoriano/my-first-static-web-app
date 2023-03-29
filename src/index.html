@@ -166,7 +166,7 @@ except urllib.error.HTTPError as error:
         throw new Error("A key should be provided to invoke the endpoint");
       }
 
-     const url = 'http://projectapiforweb.azure-api.net/v1/api/v1/service/aks-new-diabetes-prediction/score';
+     const url = 'https://projectapiforweb.azure-api.net/v1/api/v1/service/aks-new-diabetes-prediction/score';
       const data = {
         "Inputs": {
           "input1": [
@@ -187,6 +187,7 @@ except urllib.error.HTTPError as error:
         "GlobalParameters": {}
       };
       const options = {
+          mode: 'no-cors',
         method: 'POST',
         headers: {
             'Host': 'projectapiforweb.azure-api.net',
