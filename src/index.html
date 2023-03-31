@@ -161,7 +161,6 @@ except urllib.error.HTTPError as error:
       
     <div id="data"></div>
     <script>
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         const url = 'https://projectapiforweb.azure-api.net/v1/api/v1/service/aks-new-diabetes-prediction/score';
        const api_key = 'nxaBjsB5MIUT4BP1EvrC3HmewZkp5AUp'; // Replace this with the primary/secondary key or AMLToken for the endpoint
       if (!api_key) {
@@ -195,7 +194,7 @@ except urllib.error.HTTPError as error:
         },
         body: JSON.stringify(data)
       };
-      fetch(proxyUrl+url, options)
+      fetch(url, options)
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error(error));
