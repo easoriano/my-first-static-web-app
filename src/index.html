@@ -161,8 +161,8 @@ except urllib.error.HTTPError as error:
       
     <div id="data"></div>
     <script>
-        const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
-        const url = 'http://projectapiforweb.azure-api.net/v1/api/v1/service/aks-new-diabetes-prediction/score';
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com';
+        const url = 'http://20.99.136.209:80/api/v1/service/aks-new-diabetes-prediction/score';
        const api_key = 'nxaBjsB5MIUT4BP1EvrC3HmewZkp5AUp'; // Replace this with the primary/secondary key or AMLToken for the endpoint
       if (!api_key) {
         throw new Error("A key should be provided to invoke the endpoint");
