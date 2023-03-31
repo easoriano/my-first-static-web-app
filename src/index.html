@@ -196,7 +196,7 @@ except urllib.error.HTTPError as error:
         },
         body: JSON.stringify(data)
       };
-      fetch(proxy+url, options)
+      fetch(proxyUrl+url, options)
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error(error));
