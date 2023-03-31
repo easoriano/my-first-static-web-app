@@ -161,12 +161,13 @@ except urllib.error.HTTPError as error:
       
     <div id="data"></div>
     <script>
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const url = 'https://projectapiforweb.azure-api.net/v1/api/v1/service/aks-new-diabetes-prediction/score';
        const api_key = 'nxaBjsB5MIUT4BP1EvrC3HmewZkp5AUp'; // Replace this with the primary/secondary key or AMLToken for the endpoint
       if (!api_key) {
         throw new Error("A key should be provided to invoke the endpoint");
       }
 
-     const url = 'https://projectapiforweb.azure-api.net/v1/api/v1/service/aks-new-diabetes-prediction/score';
       const data = {
         "Inputs": {
           "input1": [
@@ -187,17 +188,15 @@ except urllib.error.HTTPError as error:
         "GlobalParameters": {}
       };
       const options = {
-          mode: 'cors',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': 'https://ambitious-water-0d40d801e.2.azurestaticapps.net',
-            'Authorization': 'Bearer ' + api_key,
-            'Host': 'projectapiforweb.azure-api.net'
+            'Authorization': 'Bearer ' + api_key;
         },
         body: JSON.stringify(data)
       };
-      fetch(url, options)
+      fetch(proxy+url, options)
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error(error));
